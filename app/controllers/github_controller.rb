@@ -2,6 +2,7 @@ require 'uri'
 require 'github_api'
 
 class GithubController < ApplicationController
+  skip_before_filter :verify_authenticity_token, only: :hook
   include ErrorHandle
   def index
   end
