@@ -1,5 +1,5 @@
-RevisionIt: communicate with commit hash
-=========================================
+RevisionIt: communicate with commit hashcode
+============================================
 
 [![wercker status](https://app.wercker.com/status/e5c491c040b052183ef51e0550b24a7d/m "wercker status")](https://app.wercker.com/project/bykey/e5c491c040b052183ef51e0550b24a7d)
 
