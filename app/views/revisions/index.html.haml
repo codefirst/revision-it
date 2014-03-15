@@ -3,7 +3,6 @@
 %table
   %tr
     %th Hash code
-    %th Url
     %th Log
     %th
     %th
@@ -11,8 +10,7 @@
 
   - @revisions.each do |revision|
     %tr
-      %td= revision.hash_code
-      %td= revision.url
+      %td= link_to revision.hash_code[0,6], revision.url
       %td= revision.log
       %td= link_to 'Show', revision
       %td= link_to 'Edit', edit_revision_path(revision)
