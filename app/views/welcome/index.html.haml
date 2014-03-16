@@ -25,7 +25,7 @@
             %section
               %h1.brand RevisionIt
               %p
-                <span class="brand">RevisionIt</span> provides API to find Github/Bitbuctket link from hashcode.
+                <span class="brand">RevisionIt</span> provides API to get Github/Bitbuctket link from hashcode.
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
               %p=link_to "Read more...", "/"
@@ -33,14 +33,11 @@
           .span4
             %section
               %h3 Signin
-              %button.btn.btn-large.btn-primary.btn-block.disabled Signin with Github
-              %button.btn.btn-large.btn-primary.btn-block.disabled Signin with Bitbucket
+              =button_to "Signin with Github", dashboard_path, class: "btn btn-large btn-primary btn-block disabled"
+              =button_to "Signin with Bitbucket", dashboard_path, class: "btn btn-large btn-primary btn-block disabled"
             %section
-              %h3 Try this
-              .input-append
-                %input{ type: "text", placeholder: "(e.g. b27dc2fc794b5f4910)" }
-                %button.btn Show
-              %p!="or see example: #{link_to "b27dc2", "/"}, #{link_to "a2bf3", "/"}"
+              %h3 See example
+              %p!="Get embeded HTML for #{link_to_revision '627be6'}, and #{link_to_revision '8f0e74'}."
 
     .container
       %section

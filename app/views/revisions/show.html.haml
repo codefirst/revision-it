@@ -1,15 +1,12 @@
-%p#notice= notice
-
-%p
-  %b Hash code:
-  = @revision.hash_code
-%p
-  %b Url:
-  = @revision.url
-%p
-  %b Log:
-  = @revision.log
-
-= link_to 'Edit', edit_revision_path(@revision)
-\|
-= link_to 'Back', revisions_path
+%h2="commit #{@revision.hash_code[0,6]}"
+%dl
+  %dt Log
+  %dd=@revision.log
+  %dt Permlink
+  %dd=link_to_url @revision.url
+%h3 Embed
+%dl
+  %dt embed HTML
+  %dd=link_to_url(hash_path(hash: @revision.hash_code, only_path: false))
+  %dt Get information by JSON
+  %dd=link_to_url(hash_path(hash: @revision.hash_code, format: 'json', only_path: false))

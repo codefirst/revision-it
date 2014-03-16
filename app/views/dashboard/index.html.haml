@@ -1,0 +1,22 @@
+%section
+  %h2 Available Project
+  %p TODO: 連携済みのGithub/Bitbucketプロジェクトを表示する
+  %ul
+    %li= link_to 'Setup Github hooks.', github_path
+%section
+  %h2 Recent Revisions
+  %table.table.table-striped
+    %thead
+      %tr
+        %th #
+        %th message
+        %th Created at
+    %tbody
+      - @revisions.each do|revision|
+        %tr
+          %td=link_to revision.hash_code[0,6], revision_path(revision.hash_code)
+          %td=revision.log[0,50]
+          %td=revision.created_at
+      %tr
+        %td{colspan: 3}!="See #{link_to 'all revisions', revisions_path}..."
+

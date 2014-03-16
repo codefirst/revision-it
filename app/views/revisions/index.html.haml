@@ -1,21 +1,13 @@
-%h1 Listing revisions
-
-%table
-  %tr
-    %th Hash code
-    %th Log
-    %th
-    %th
-    %th
-
-  - @revisions.each do |revision|
+%h2 All revisions
+%table.table.table-striped
+  %thead
     %tr
-      %td= link_to revision.hash_code[0,6], revision.url
-      %td= revision.log
-      %td= link_to 'Show', revision
-      %td= link_to 'Edit', edit_revision_path(revision)
-      %td= link_to 'Destroy', revision, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Revision', new_revision_path
+      %th #
+      %th message
+      %th Created at
+  %tbody
+    - @revisions.each do|revision|
+      %tr
+        %td=link_to revision.hash_code[0,6], revision_path(revision.hash_code)
+        %td=revision.log[0,50]
+        %td=revision.created_at

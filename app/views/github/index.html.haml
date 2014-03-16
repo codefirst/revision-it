@@ -1,5 +1,20 @@
-%h2 Import revisions from github
-= form_tag(import_path, method: "post") do
-  .input-append
-    %input.span4(type="text" placeholder="(e.g. http://github.com/codefirst/revision-it)" name="url")
-    %button.btn Import
+%section
+  %h2 Auto setup(TBD)
+  %p TODO: Githubアカウントと連携して、いい感じにWebHookを設定する
+
+%section
+  %h2 Manual setup
+
+%section
+  %h3 Import revisions from github
+  = form_tag(import_path, method: "post") do
+    .input-append
+      %input.span4(type="text" placeholder="(e.g. http://github.com/codefirst/revision-it)" name="url")
+      %button.btn Import
+  %h3 Set webhook
+  %p Go to Settings -> Webhooks & Services -> Add webhooks, and input following:
+  %ul
+    %li Payload URL: <code>#{url_for(controller: 'github', action: 'hook', only_path: false)}</code>
+    %li Payload version: <code>application/vnd.github.v3+form</code>
+    %li Wihch events would you like to trigger this webhook?: Just the push event.
+    %li Active: Yes
