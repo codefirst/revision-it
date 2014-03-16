@@ -10,6 +10,14 @@ require 'spec_helper'
 #     end
 #   end
 # end
-describe WelcomeHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
+describe ApplicationHelper do
+  describe "#link_to_revision" do
+    subject { link_to_revision "foo" }
+    it { should == %(<a href="/revisions/foo">foo</a>) }
+  end
+
+  describe "#link_to_url" do
+    subject { link_to_url "http://example.com" }
+    it { should == %(<a href="http://example.com">http://example.com</a>) }
+  end
 end
