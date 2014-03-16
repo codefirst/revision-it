@@ -1,5 +1,10 @@
 require 'spec_helper'
 
 describe Revision do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before { @revision = create(:revision) }
+
+  describe 'from hash' do
+    subject { Revision.from_hash @revision.hash_code[0,3] }
+    it { should == @revision }
+  end
 end
