@@ -38,6 +38,7 @@ end
 
 group :development do
   gem 'rspec-rails'
+  gem 'database_cleaner'
   gem 'sqlite3'
   gem 'factory_girl_rails'
 end

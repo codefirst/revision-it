@@ -38,6 +38,7 @@ GEM
     coffee-script-source (1.6.3)
     commonjs (0.2.7)
     daemons (1.1.9)
+    database_cleaner (1.2.0)
     descendants_tracker (0.0.3)
     diff-lcs (1.2.5)
     erb2haml (0.1.5)
@@ -190,6 +191,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  database_cleaner
   erb2haml
   factory_girl_rails
   github_api
