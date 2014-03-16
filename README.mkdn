@@ -2,6 +2,7 @@ RevisionIt: communicate with commit hashcode
 ============================================
 
 [![wercker status](https://app.wercker.com/status/e5c491c040b052183ef51e0550b24a7d/m "wercker status")](https://app.wercker.com/project/bykey/e5c491c040b052183ef51e0550b24a7d)
+[![Code Climate](https://codeclimate.com/github/codefirst/revision-it.png)](https://codeclimate.com/github/codefirst/revision-it)
 
 Overview
 -----------------------------------------
