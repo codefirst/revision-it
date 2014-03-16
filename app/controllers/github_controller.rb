@@ -1,5 +1,4 @@
-require 'uri'
-require 'github_api'
+require 'revision_it/service/github'
 
 class GithubController < ApplicationController
   skip_before_filter :verify_authenticity_token, only: :hook
@@ -8,34 +7,30 @@ class GithubController < ApplicationController
   end
 
   def import_all
-    import_github params[:url]
-
+    import params[:url]
     respond_to do|format|
       format.html { redirect_to github_path, notice: 'ok' }
       format.json { render json: { status: 'ok' } }
     end
- end
+  rescue RevisionIt::Service::GithubError => e
+    error e.message, 400
+  end
 
   def hook
     payload = JSON.parse(params[:payload])
-    import_github payload['repository']['url']
+    import payload['repository']['url']
     render text: 'ok'
+  rescue RevisionIt::Service::GithubError => e
+    error e.message, 400
   end
 
   private
-  def import_github(url)
-    url = URI.parse url
-
-    raise "not valid url" unless url.host == 'github.com'
-    raise "not valid url" unless url.path =~ %r!\A/([^/]*)/([^/]*)!
-
-    user = $1
-    repos = $2
-    Github.repos.commits.all(user, repos).each do|commit|
-      Revision.where(hash_code: commit.sha).first_or_create! do |rev|
-        rev.url = commit.html_url
-        rev.log = commit.commit.message
-      end
+  def import(url)
+    RevisionIt::Service::Github.commits(url) do|commit|
+      rev = Revision.where(hash_code: commit.sha).first_or_create!
+      rev.url = commit.html_url
+      rev.log = commit.commit.message
+      rev.save!
     end
   end
 end
