@@ -27,10 +27,8 @@ class GithubController < ApplicationController
   private
   def import(url)
     RevisionIt::Service::Github.commits(url) do|commit|
-      rev = Revision.where(hash_code: commit.sha).first_or_create!
-      rev.url = commit.html_url
-      rev.log = commit.commit.message
-      rev.save!
+      rev = Revision.where(hash_code: commit.hash_code).first_or_create!
+      rev.update_attributes(commit.to_h)
     end
   end
 end

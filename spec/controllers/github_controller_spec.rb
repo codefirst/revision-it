@@ -2,10 +2,10 @@ require 'spec_helper'
 require 'ostruct'
 
 describe GithubController do
-  def commit(sha, html_url, message)
-    OpenStruct.new(sha:      sha,
-                   html_url: html_url,
-                   commit:   OpenStruct.new(message: message))
+  def commit(hash_code, url, log)
+    OpenStruct.new(hash_code: hash_code,
+                   url: url,
+                   log: log)
   end
 
   describe "GET 'index'" do

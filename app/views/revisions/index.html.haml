@@ -1,13 +1,2 @@
 %h2 All revisions
-%table.table.table-striped
-  %thead
-    %tr
-      %th #
-      %th message
-      %th Created at
-  %tbody
-    - @revisions.each do|revision|
-      %tr
-        %td=link_to revision.hash_code[0,6], revision_path(revision.hash_code)
-        %td=revision.log[0,50]
-        %td=revision.created_at
+= render partial: 'shared/revision_table', locals: { revisions: @revisions }
