@@ -8,13 +8,12 @@ require 'database_cleaner'
 require 'coveralls'
 require "codeclimate-test-reporter"
 
-# Coverall
-Coveralls.wear!
+# coverage
+formatter = [ SimpleCov::Formatter::HTMLFormatter, Coveralls::SimpleCov::Formatter ]
+formatter << CodeClimate::TestReporter::Formatter if ENV['CODECLIMATE_REPO_TOKEN']
 
-# Codecliminate
-if ENV['CODECLIMATE_REPO_TOKEN'] then
-  CodeClimate::TestReporter.start
-end
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[*formatter]
+SimpleCov.start 'rails'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
