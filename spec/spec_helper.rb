@@ -5,7 +5,11 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'factory_girl'
 require 'database_cleaner'
+require 'coveralls'
 require "codeclimate-test-reporter"
+
+# Coverall
+Coveralls.wear!
 
 # Codecliminate
 if ENV['CODECLIMATE_REPO_TOKEN'] then

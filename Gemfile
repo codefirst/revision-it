@@ -42,6 +42,7 @@ group :development, :test do
   gem 'sqlite3'
   gem 'factory_girl_rails'
   gem "codeclimate-test-reporter", require: nil
+  gem 'coveralls', require: false
 end
 
 group :production do
