@@ -41,6 +41,7 @@ group :development do
   gem 'database_cleaner'
   gem 'sqlite3'
   gem 'factory_girl_rails'
+  gem "codeclimate-test-reporter", group: :test, require: nil
 end
 
 group :production do
