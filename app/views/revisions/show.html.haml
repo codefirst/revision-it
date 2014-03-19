@@ -1,17 +1,18 @@
 %h2="commit #{@revision.hash_code[0,6]}"
-%dl
-  %dt Log
-  %dd=@revision.log
-  %dt Author
-  %dd=@revision.author
-  %dt Date
-  %dd=@revision.date
-  %dt Project
-  %dd=@revision.project
-  %dt Source
-  %dd=@revision.source
-  %dt Permlink
-  %dd=link_to_url @revision.url
+
+
+.revision
+  .log=@revision.log
+  .info
+    %span.author=@revision.author
+    %span.date=@revision.date
+    %span.commit
+      %span.title commit
+      %span.value=link_to @revision.hash_code, @revision.url
+    %span.project
+      %span.title project
+      %span.value=@revision.project
+
 %h3 Embed
 %dl
   %dt embed HTML
