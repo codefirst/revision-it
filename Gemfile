@@ -36,12 +36,12 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-group :development do
+group :development, :test do
   gem 'rspec-rails'
   gem 'database_cleaner'
   gem 'sqlite3'
   gem 'factory_girl_rails'
-  gem "codeclimate-test-reporter", group: :test, require: nil
+  gem "codeclimate-test-reporter", require: nil
 end
 
 group :production do
