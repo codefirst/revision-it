@@ -17,9 +17,14 @@ class GithubController < ApplicationController
   end
 
   def hook
-    payload = JSON.parse(params[:payload])
-    import payload['repository']['url']
-    render text: 'ok'
+    payload = JSON.parse(params[:payload]) rescue {}
+    url = payload.fetch('repository',{}).fetch('url', '')
+    if url.empty? then
+      error 'invaild payload', 400
+    else
+      import url
+      render text: 'ok'
+    end
   rescue RevisionIt::Service::GithubError => e
     error e.message, 400
   end

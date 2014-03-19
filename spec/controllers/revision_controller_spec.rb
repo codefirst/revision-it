@@ -71,14 +71,30 @@ describe RevisionsController do
     end
 
     context 'not found' do
-      before do
-        @revision = create(:revision)
-        get 'via_hash', hash: '-'
+      describe 'small hash' do
+        before do
+          @revision = create(:revision)
+          get 'via_hash', hash: '-'
+        end
+
+        describe 'response' do
+          subject { response }
+          it { should_not be_success }
+          its(:status) { should == 400 }
+        end
       end
 
-      describe 'response' do
-        subject { response }
-        it { should_not be_success }
+      describe 'not found' do
+        before do
+          @revision = create(:revision)
+          get 'via_hash', hash: 'a' * 30
+        end
+
+        describe 'response' do
+          subject { response }
+          it { should_not be_success }
+          its(:status) { should == 404 }
+        end
       end
     end
   end
