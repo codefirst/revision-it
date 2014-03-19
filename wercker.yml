@@ -18,7 +18,10 @@ build:
           code: RAILS_ENV=test bundle exec rake db:schema:load
       - script:
           name: Run RSpec
-          code: bundle exec rake spec
+          code: bundle exec rake -h
+      - script:
+          name: Run RSpec
+          code: bundle exec rake -v spec
     after-steps:
       - mzp/http-notify:
           url: $DASHBOZU_URL
