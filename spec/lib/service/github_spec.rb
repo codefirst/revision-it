@@ -53,7 +53,7 @@ describe RevisionIt::Service::Github do
       its(:author) { should == 'mzp' }
       its(:date)   { should == '2000-01-01' }
       its(:source) { should == 'github' }
-      its(:project){ should == 'revision-it' }
+      its(:project){ should == 'codefirst/revision-it' }
     end
   end
 end
