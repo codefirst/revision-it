@@ -8,7 +8,9 @@ require 'database_cleaner'
 require "codeclimate-test-reporter"
 
 # Codecliminate
-CodeClimate::TestReporter.start
+if ENV['CODECLIMATE_REPO_TOKEN'] then
+  CodeClimate::TestReporter.start
+end
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
