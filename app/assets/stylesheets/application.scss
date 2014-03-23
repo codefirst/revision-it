@@ -20,36 +20,39 @@ body {
 }
 
 .header {
-  background-image: url(<%= asset_path "login-background.png" %>);
+  background-image: asset-url("login-background.png");
   padding: 10px;
+
+  section {
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 5px;
+    margin-top: 5px;
+    padding: 3px 8px;
+  }
+
+  .revision {
+    border: 1px solid #c5d5dd;
+    background-color: #e6f1f6;
+    border-radius: 5px 5px 5px 5px;
+    padding: 10px;
+  }
+
 }
 
-.header section {
-  background-color: rgba(255,255,255,0.8);
-  border-radius: 5px;
-  margin-top: 5px;
-  padding: 3px 8px;
-}
-
-.revision {
-  border: 1px solid #c5d5dd;
-  background-color: #e6f1f6;
-  border-radius: 5px 5px 5px 5px;
-  padding: 10px;
-}
-
-.info {
+.header.info {
   background-color: #fff;
   border-radius: 0px 5px 0 5px;
   padding: 5px 10px 5px 10px;
   margin:10px -10px -10px -10px;
 }
 
-.info .date, .info .title {
-  color: gray;
-}
+.info {
+  .date, .title  {
+    color: gray;
+  }
 
-.info .project, .info .commit {
-  float: right;
-  padding-left: 20px;
+  .project, .commit {
+    float: right;
+    padding-left: 20px;
+  }
 }
