@@ -1,4 +1,5 @@
 class AuthenticationController < ApplicationController
+  include ErrorHandle
   skip_before_action :authenticate_user!
 
   def login
@@ -7,6 +8,8 @@ class AuthenticationController < ApplicationController
 
   def github
     name = get_name(request)
+    return unless name
+
     user = current_user || User.where(name: name).first_or_create!
     user.name = name
     user.save!

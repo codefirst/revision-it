@@ -4,5 +4,6 @@ module ErrorHandle
       format.html { render text: text, status: status }
       format.json { render json: { status: 'error', reason: text }}
     end
+    nil
   end
 end
