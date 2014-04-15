@@ -1,31 +1,40 @@
 require 'spec_helper'
 
 describe DashboardController do
-
-  before do
-    user = User.create!
-    user.save
-    sign_in user
+  context "not sign-in" do
+    describe "GET 'index'" do
+      before { get 'index' }
+      subject { response }
+      it { should redirect_to(new_user_session_path) }
+    end
   end
 
-  describe "GET 'index'" do
+  context "user sign-in" do
     before do
-      @foo = create(:revision, hash_code: 'foo')
-      @bar = create(:revision, hash_code: 'bar')
-      @baz = create(:revision, hash_code: 'baz')
-      get 'index'
+      user = User.create!
+      user.save
+      sign_in user
     end
 
-    describe 'response' do
-      subject { response }
-      it { should be_success }
-    end
+    describe "GET 'index'" do
+      before do
+        @foo = create(:revision, hash_code: 'foo')
+        @bar = create(:revision, hash_code: 'bar')
+        @baz = create(:revision, hash_code: 'baz')
+        get 'index'
+      end
 
-    describe 'revisions' do
-      subject { assigns(:revisions) }
+      describe 'response' do
+        subject { response }
+        it { should be_success }
+      end
 
-      it { should_not be_empty }
-      it { should include(@foo,@bar,@baz) }
+      describe 'revisions' do
+        subject { assigns(:revisions) }
+
+        it { should_not be_empty }
+        it { should include(@foo,@bar,@baz) }
+      end
     end
   end
 end

@@ -1,28 +1,36 @@
 require 'spec_helper'
 
 describe RevisionsController do
-  before do
-    user = User.create!
-    user.save
-    sign_in user
-  end
-
   describe "GET 'index'" do
-    before do
-      100.times {|i|
-        create(:revision, hash_code: "commit-#{i}")
-      }
-      get 'index'
-    end
-
-    describe 'response' do
+    context "not signin" do
+      before { get 'index' }
       subject { response }
-      it { should be_success }
+      it { should redirect_to(new_user_session_path) }
     end
 
-    describe 'assigns' do
-      subject { assigns :revisions }
-      it { should have(100).items }
+    context "signin" do
+      before do
+        user = User.create!
+        user.save
+        sign_in user
+      end
+
+      before do
+        100.times {|i|
+          create(:revision, hash_code: "commit-#{i}")
+        }
+        get 'index'
+      end
+
+      describe 'response' do
+        subject { response }
+        it { should be_success }
+      end
+
+      describe 'assigns' do
+        subject { assigns :revisions }
+        it { should have(100).items }
+      end
     end
   end
 

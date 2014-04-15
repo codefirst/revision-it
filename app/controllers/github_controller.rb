@@ -2,6 +2,7 @@ require 'revision_it/service/github'
 
 class GithubController < ApplicationController
   skip_before_filter :verify_authenticity_token, only: :hook
+  skip_before_filter :authenticate_user!, only: :hook
   include ErrorHandle
   def index
   end

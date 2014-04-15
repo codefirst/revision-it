@@ -1,5 +1,6 @@
 class RevisionsController < ApplicationController
   include ErrorHandle
+  skip_before_action :authenticate_user!, only: [:show, :via_hash]
 
   # GET /revisions
   # GET /revisions.json

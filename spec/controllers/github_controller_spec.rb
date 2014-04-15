@@ -2,12 +2,6 @@ require 'spec_helper'
 require 'ostruct'
 
 describe GithubController do
-  before do
-    user = User.create!
-    user.save
-    sign_in user
-  end
-
   def commit(hash_code, url, log)
     OpenStruct.new(hash_code: hash_code,
                    url: url,
@@ -15,59 +9,87 @@ describe GithubController do
   end
 
   describe "GET 'index'" do
-    before do
-      get 'index'
-    end
-
-    describe 'response' do
+    context "not signin" do
+      before { get 'index' }
       subject { response }
-      it { should be_success }
+      it { should redirect_to(new_user_session_path) }
     end
-  end
 
-  describe "POST 'import'" do
-    context 'success' do
+    context "signin" do
       before do
-        create(:revision, hash_code: 'bar')
+        user = User.create!
+        user.save
+        sign_in user
+      end
 
-        RevisionIt::Service::Github.
-          stub(:commits).
-          with('https://github.com/codefirst/revision-it').
-          and_yield(commit("foo", "http://example.com", "this is text")).
-          and_yield(commit("bar", "http://example.com", "this is text"))
-
-        post 'import_all', url: 'https://github.com/codefirst/revision-it'
+      before do
+        get 'index'
       end
 
       describe 'response' do
         subject { response }
-        it { should redirect_to(github_path) }
-      end
-
-      describe 'new revision' do
-        subject { Revision.where(hash_code: 'foo').first }
-        its(:log) { should == 'this is text' }
-        its(:url) { should == 'http://example.com' }
-      end
-
-      describe 'update revision' do
-        subject { Revision.where(hash_code: 'bar').first }
-        its(:log) { should == 'this is text' }
-        its(:url) { should == 'http://example.com' }
+        it { should be_success }
       end
     end
+  end
 
-    context 'error' do
-      describe 'invalid url' do
-        before {
-          post 'import_all', url: 'https://example.com'
-        }
+  describe "POST 'import'" do
+    context "not signin" do
+      before { get 'index' }
+      subject { response }
+      it { should redirect_to(new_user_session_path) }
+    end
 
-        subject { response }
-        it { should_not be_success }
-        its(:status) { should == 400 }
+    context "signin" do
+
+      before do
+        user = User.create!
+        user.save
+        sign_in user
       end
 
+      context 'success' do
+        before do
+          create(:revision, hash_code: 'bar')
+
+          RevisionIt::Service::Github.
+            stub(:commits).
+            with('https://github.com/codefirst/revision-it').
+            and_yield(commit("foo", "http://example.com", "this is text")).
+            and_yield(commit("bar", "http://example.com", "this is text"))
+
+          post 'import_all', url: 'https://github.com/codefirst/revision-it'
+        end
+
+        describe 'response' do
+          subject { response }
+          it { should redirect_to(github_path) }
+        end
+
+        describe 'new revision' do
+          subject { Revision.where(hash_code: 'foo').first }
+          its(:log) { should == 'this is text' }
+          its(:url) { should == 'http://example.com' }
+        end
+
+        describe 'update revision' do
+          subject { Revision.where(hash_code: 'bar').first }
+          its(:log) { should == 'this is text' }
+          its(:url) { should == 'http://example.com' }
+        end
+      end
+
+      context 'error' do
+        describe 'invalid url' do
+          before {
+            post 'import_all', url: 'https://example.com'
+          }
+
+          subject { response }
+          it { should_not be_success }
+          its(:status) { should == 400 }
+        end
+      end
     end
   end
 
