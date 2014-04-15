@@ -33,8 +33,9 @@
           .span4
             %section
               %h3 Signin
-              =button_to "Signin with Github", dashboard_path, class: "btn btn-large btn-primary btn-block disabled"
-              =button_to "Signin with Bitbucket", dashboard_path, class: "btn btn-large btn-primary btn-block disabled"
+              = form_tag user_omniauth_authorize_path(:github), :method => 'post' do |f|
+                %button.btn.btn-primary.btn-large
+                  Signin with Github
             %section
               %h3 See example
               %p!="Get embeded HTML for #{link_to_revision '627be6'}, and #{link_to_revision '8f0e74'}."
