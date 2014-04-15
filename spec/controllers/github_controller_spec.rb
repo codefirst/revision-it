@@ -2,6 +2,12 @@ require 'spec_helper'
 require 'ostruct'
 
 describe GithubController do
+  before do
+    user = User.create!
+    user.save
+    sign_in user
+  end
+
   def commit(hash_code, url, log)
     OpenStruct.new(hash_code: hash_code,
                    url: url,

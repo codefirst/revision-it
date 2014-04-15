@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe RevisionsController do
+  before do
+    user = User.create!
+    user.save
+    sign_in user
+  end
 
   describe "GET 'index'" do
     before do

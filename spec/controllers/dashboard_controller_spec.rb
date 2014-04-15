@@ -2,6 +2,12 @@ require 'spec_helper'
 
 describe DashboardController do
 
+  before do
+    user = User.create!
+    user.save
+    sign_in user
+  end
+
   describe "GET 'index'" do
     before do
       @foo = create(:revision, hash_code: 'foo')
