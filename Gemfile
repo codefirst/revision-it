@@ -1,20 +1,34 @@
 source 'https://rubygems.org'
 
+# ------------------------------------------------------------------------------------------
+# rails core
+# ------------------------------------------------------------------------------------------
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.2'
 
+# ------------------------------------------------------------------------------------------
+# authentication
+# ------------------------------------------------------------------------------------------
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-oauth2', '~> 1.1.2'
+gem 'omniauth-github', '~> 1.1.1'
+gem 'settingslogic'
+# ------------------------------------------------------------------------------------------
+# Github
+# ------------------------------------------------------------------------------------------
 # github hook
 gem "github_api"
 
+# ------------------------------------------------------------------------------------------
+# View
+# ------------------------------------------------------------------------------------------
 # Use bootstrap
 gem 'less-rails'
 gem 'twitter-bootstrap-rails'
 
 # Use HAML for html
 gem 'haml-rails'
-group :development do
-  gem 'erb2haml'
-end
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -34,6 +48,9 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
+# ------------------------------------------------------------------------------------------
+# group specified
+# ------------------------------------------------------------------------------------------
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
