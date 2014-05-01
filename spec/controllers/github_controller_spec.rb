@@ -2,10 +2,8 @@ require 'spec_helper'
 require 'ostruct'
 
 describe GithubController do
-  def commit(hash_code, url, log)
-    OpenStruct.new(hash_code: hash_code,
-                   url: url,
-                   log: log)
+  def commit(opt)
+    OpenStruct.new({ project: "codefirst/revision-it" }.merge(opt))
   end
 
   describe "GET 'index'" do
@@ -43,20 +41,22 @@ describe GithubController do
     context "signin" do
 
       before do
-        user = User.create!
-        user.save
-        sign_in user
+        @user = User.create!
+        @user.save
+        sign_in @user
       end
 
       context 'success' do
         before do
           create(:revision, hash_code: 'bar')
+          @project = create(:project, owner: 'codefirst', repos: 'revision-it')
+          @project.save!
 
           RevisionIt::Service::Github.
             stub(:commits).
             with('https://github.com/codefirst/revision-it').
-            and_yield(commit("foo", "http://example.com", "this is text")).
-            and_yield(commit("bar", "http://example.com", "this is text"))
+            and_yield(commit(hash_code: "foo", url: "http://example.com", log: "this is text")).
+            and_yield(commit(hash_code: "bar", url: "http://example.com", log: "this is text", project: "mzp/hoge" ))
 
           post 'import_all', url: 'https://github.com/codefirst/revision-it'
         end
@@ -70,12 +70,25 @@ describe GithubController do
           subject { Revision.where(hash_code: 'foo').first }
           its(:log) { should == 'this is text' }
           its(:url) { should == 'http://example.com' }
+          its(:project) { should == @project }
+
+          describe 'project' do
+            subject { Project.where(id: @project.id).first.users }
+            it { should include(@user) }
+          end
         end
 
         describe 'update revision' do
           subject { Revision.where(hash_code: 'bar').first }
           its(:log) { should == 'this is text' }
           its(:url) { should == 'http://example.com' }
+          its(:project) { should == Project.where(owner: "mzp", repos: "hoge").first }
+
+          describe 'project' do
+            subject { Project.where(owner: "mzp", repos: "hoge").first.users }
+            it { should include(@user) }
+          end
+
         end
       end
 
