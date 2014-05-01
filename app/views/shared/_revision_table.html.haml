@@ -11,6 +11,6 @@
       %tr
         %td=link_to revision.hash_code[0,6], revision_path(revision.hash_code)
         %td=revision.log[0,50]
-        %td=revision.project
+        %td=revision.project.display_name
         %td=revision.author
         %td=revision.date

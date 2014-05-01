@@ -23,4 +23,8 @@ describe Project do
     end
   end
 
+  describe "display name" do
+    subject { project }
+    its(:display_name) { should == "codefirst/revision-it" }
+  end
 end
