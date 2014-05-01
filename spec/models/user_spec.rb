@@ -1,26 +1,25 @@
 require 'spec_helper'
 
-describe Project do
+describe User do
   let(:project) { create(:project) }
   let(:user)    { create(:user)    }
 
-  describe "user" do
-    subject { project.users }
+  describe "project" do
+    subject { user.projects }
 
-    context "duplicate user" do
+    context "duplicate project" do
       before { 3.times {
-        project.users << user
+        user.projects << project
       } }
       it { should have(1).item }
     end
 
     context "multiple project" do
       before do
-        project.users << create(:user, name: "mzp")
-        project.users << create(:user, name: "nzp")
+        user.projects << create(:project, repos: "a")
+        user.projects << create(:project, repos: "b")
       end
       it { should have(2).item }
     end
   end
-
 end
