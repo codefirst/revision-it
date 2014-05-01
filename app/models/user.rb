@@ -1,6 +1,5 @@
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :omniauthable
-
+  has_many :user_projects
+  has_many :projects, -> { order(:owner, :repos) }, through: :user_projects
 end
