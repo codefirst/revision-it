@@ -1,7 +1,10 @@
 %section
   %h2 Available Project
-  %p TODO: 連携済みのGithub/Bitbucketプロジェクトを表示する
   %ul
+  - @projects.each do|project|
+    %li="#{project.owner}/#{project.repos}"
+  %ul
+    %li= link_to 'フックを設定する', github_path
     %li= link_to 'Setup Github hooks.', github_path
 %section
   %h2 Recent Revisions

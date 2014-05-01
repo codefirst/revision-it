@@ -33,8 +33,17 @@ class GithubController < ApplicationController
   private
   def import(url)
     RevisionIt::Service::Github.commits(url) do|commit|
+      # revision
       rev = Revision.where(hash_code: commit.hash_code).first_or_create!
-      rev.update_attributes(commit.to_h)
+
+      # project
+      owner, repos = commit.project.split('/', 2)
+      project = Project.where(owner: owner, repos: repos).first_or_create!
+
+      project.users << current_user
+
+      # update other attributes
+      rev.update_attributes(commit.to_h.merge(project: project))
     end
   end
 end
