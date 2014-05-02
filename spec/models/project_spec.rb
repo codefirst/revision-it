@@ -23,6 +23,20 @@ describe Project do
     end
   end
 
+  describe "revisions" do
+    let(:rev_a) { create(:revision, id: 1, hash_code: 'aaaa', date: Date.new(2000,1,1)) }
+    let(:rev_b) { create(:revision, id: 2, hash_code: 'bbbb', date: Date.new(2000,2,1)) }
+    let(:rev_c) { create(:revision, id: 3, hash_code: 'cccc', date: Date.new(2000,3,1)) }
+
+    describe "sort order" do
+      before {
+        [rev_c, rev_a, rev_b ].each {|r| project.revisions << r }
+      }
+      subject { project.revisions }
+      it { should == [ rev_c, rev_b, rev_a ] }
+    end
+  end
+
   describe "display name" do
     subject { project }
     its(:display_name) { should == "codefirst/revision-it" }
