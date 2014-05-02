@@ -40,7 +40,7 @@ class GithubController < ApplicationController
       owner, repos = commit.project.split('/', 2)
       project = Project.where(owner: owner, repos: repos).first_or_create!
 
-      project.users << current_user
+      project.users << current_user if current_user
 
       # update other attributes
       rev.update_attributes(commit.to_h.merge(project: project))

@@ -111,7 +111,9 @@ describe GithubController do
       before do
         RevisionIt::Service::Github.
           stub(:commits).
-          with('https://example.com')
+          with('https://example.com').
+          and_yield(commit(hash_code: "foo", url: "http://example.com", log: "this is text")).
+          and_yield(commit(hash_code: "bar", url: "http://example.com", log: "this is text", project: "mzp/hoge" ))
 
         post 'hook', payload: { repository: { url: 'https://example.com' } }.to_json
       end
