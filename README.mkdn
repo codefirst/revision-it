@@ -9,6 +9,8 @@ Overview
 -----------------------------------------
 RevisionIt provides APIs to obtain a URL of some repository viewer(e.g. Github) from commit hash code.
 
+See also [demo page](http://revision-it.herokuapp.com).
+
 How to run
 -----------------------------------------
 TBD
