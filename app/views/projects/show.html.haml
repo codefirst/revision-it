@@ -1,0 +1,5 @@
+%h2=@project.display_name
+%p see <a href="https://github.com/#{@project.owner}/#{@project.repos}" target="_blank">github project</a>
+
+%h3 Recent Revisions
+= render partial: 'shared/revision_table', locals: { revisions: @project.revisions }

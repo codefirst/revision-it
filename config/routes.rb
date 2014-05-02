@@ -7,6 +7,9 @@ RevisionIt::Application.routes.draw do
   get 'revisions/' => 'revisions#index', as: 'revisions'
   get 'revisions/:hash' => 'revisions#show', as: 'revision'
 
+  # Project page
+  get "project/:id" => 'projects#show', as: 'project'
+
   # Revision's API
   get 'hash/:hash' => 'revisions#via_hash', as: 'hash'
 

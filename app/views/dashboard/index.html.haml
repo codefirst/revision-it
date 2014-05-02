@@ -2,7 +2,7 @@
   %h2 Available Project
   %ul
   - @projects.each do|project|
-    %li="#{project.owner}/#{project.repos}"
+    %li= link_to "#{project.owner}/#{project.repos}", project_path(project.id)
   %ul
     %li= link_to 'フックを設定する', github_path
     %li= link_to 'Setup Github hooks.', github_path
