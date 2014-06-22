@@ -14,6 +14,7 @@ class AuthenticationController < ApplicationController
     user.name = name
     user.save!
     sign_in user, event: :authentication
+    session[:credentials] = request.env['omniauth.auth'].credentials
     redirect_to dashboard_path
   end
 
